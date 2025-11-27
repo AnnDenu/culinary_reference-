@@ -1,66 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Кулинарный справочник
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Веб-приложение для управления рецептами с системой модерации, комментариями и административной панелью.
 
-## About Laravel
+## Технологии
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend**: Laravel 11
+- **PHP**: 8.2+
+- **База данных**: MySQL
+- **Frontend**: Tailwind CSS, Alpine.js
+- **Сборка**: Vite
+- **Аутентификация**: Laravel Breeze
+- **Экспорт данных**:  Excel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Основной функционал
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Для пользователей
 
-## Learning Laravel
+- Регистрация и аутентификация
+- Создание, редактирование и удаление рецептов
+- Добавление ингредиентов и шагов приготовления к рецептам
+- Просмотр рецептов с фильтрацией по категориям
+- Комментирование рецептов
+- Добавление рецептов в избранное
+- Просмотр истории просмотров рецептов
+- Управление профилем
+- Просмотр уведомлений о статусе рецептов
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Для администраторов
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- Модерация рецептов (одобрение/отклонение)
+- Управление пользователями (изменение ролей, блокировка)
+- Управление категориями
+- Модерация ингредиентов
+- Просмотр и управление комментариями
+- Экспорт данных в Excel:
+  - Экспорт рецептов
+  - Экспорт комментариев
+  - Экспорт просмотров рецептов
+  - Экспорт действий пользователей
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Структура базы данных
 
-## Laravel Sponsors
+### Основные модели
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **User** - пользователи (роли: user, admin, moderator)
+- **Recipe** - рецепты (статусы: pending, approved, rejected)
+- **Category** - категории рецептов
+- **Ingredient** - ингредиенты рецептов
+- **RecipeStep** - шаги приготовления
+- **Comment** - комментарии к рецептам
+- **Favorite** - избранные рецепты
+- **RecipeView** - история просмотров рецептов
+- **History** - история действий пользователя
+- **Activity** - активность пользователей
+- **Notification** - уведомления
 
-### Premium Partners
+### Поля рецепта
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Название, описание
+- Время приготовления
+- Сложность (easy, medium, hard)
+- Количество порций
+- Изображение
+- Калорийность, белки, жиры, углеводы
+- Категория
+- Статус модерации
+- Причина отклонения (если отклонен)
 
-## Contributing
+## Установка
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Клонировать репозиторий
+2. Установить зависимости:
+   ```bash
+   composer install
+   npm install
+   ```
+3. Настроить окружение:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Создать базу данных SQLite:
+   ```bash
+   touch database/database.sqlite
+   ```
+5. Выполнить миграции:
+   ```bash
+   php artisan migrate
+   ```
+6. Запустить сидеры (опционально):
+   ```bash
+   php artisan db:seed
+   ```
+7. Собрать фронтенд:
+   ```bash
+   npm run build
+   ```
+8. Запустить сервер разработки:
+   ```bash
+   php artisan serve
+   ```
 
-## Code of Conduct
+## Разработка
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Запуск в режиме разработки
 
-## Security Vulnerabilities
+```bash
+# Терминал 1 - Laravel сервер
+php artisan serve
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Терминал 2 - Vite dev server
+npm run dev
+```
 
-## License
+### Тестирование
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan test
+```
+
+### Форматирование кода
+
+```bash
+./vendor/bin/pint
+```
+
+## Структура проекта
+
+```
+app/
+├── Exports/          # Классы экспорта в Excel
+├── Http/
+│   ├── Controllers/  # Контроллеры приложения
+│   ├── Middleware/  # Middleware
+│   └── Requests/    # Form Request валидация
+├── Models/           # Eloquent модели
+├── Notifications/    # Уведомления
+└── View/             # Blade компоненты
+
+database/
+├── migrations/       # Миграции базы данных
+├── seeders/          # Сидеры для тестовых данных
+└── factories/        # Фабрики для тестов
+
+resources/
+├── views/            # Blade шаблоны
+├── css/              # Стили
+└── js/               # JavaScript файлы
+
+routes/
+├── web.php           # Веб-маршруты
+└── auth.php          # Маршруты аутентификации
+```
+
+## Маршруты
+
+### Публичные
+
+- `/` - главная страница
+- `/recipes` - каталог рецептов
+- `/recipes/{id}` - просмотр рецепта
+- `/catalog` - каталог
+- `/about` - о проекте
+
+### Требующие аутентификации
+
+- `/dashboard` - панель пользователя
+- `/profile` - профиль пользователя
+- `/profile/recipes` - мои рецепты
+- `/profile/history` - история просмотров
+- `/profile/notifications` - уведомления
+- `/recipes/create` - создание рецепта
+- `/recipes/{id}/edit` - редактирование рецепта
+
+### Административные
+
+- `/admin` - главная страница админ-панели
+- `/admin/recipes` - управление рецептами
+- `/admin/users` - управление пользователями
+- `/admin/categories` - управление категориями
+- `/admin/comments` - управление комментариями
+- `/admin/ingredients` - управление ингредиентами
+- `/admin/reports/*` - экспорт отчетов
+
+## Роли пользователей
+
+- **user** - обычный пользователь (по умолчанию)
+- **admin** - администратор с полным доступом
+- **moderator** - модератор (ограниченные права)
