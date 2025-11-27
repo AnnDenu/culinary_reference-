@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.text-darker-green { color: #8BBF88; }
+.border-darker-green { border-color: #8BBF88; }
+.text-darker-red { color: #E47777; }
+.focus:ring-deep-blue { --tw-ring-color: #7CA7B6; }
+.focus:border-deep-blue { border-color: #7CA7B6; }
+.bg-darker-green { background-color: #8BBF88; }
+.hover\:bg-deep-green:hover { background-color: #76A076; }
+/* Стили для контейнера */
+#falling-products {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Базовые стили для каждого продукта */
+.product {
+    position: absolute;
+    width: 50px; /* Размер продуктов, можно изменить */
+    height: 50px;
+    background-size: cover;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
+
+/* Анимация падения продуктов */
+@keyframes fall {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(100vh); /* Падает до конца экрана */
+        opacity: 1;
+    }
+}
