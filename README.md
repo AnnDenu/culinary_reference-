@@ -80,10 +80,8 @@
    cp .env.example .env
    php artisan key:generate
    ```
-4. Создать базу данных SQLite:
-   ```bash
-   touch database/database.sqlite
-   ```
+4. Создать базу данных MySQL:
+
 5. Выполнить миграции:
    ```bash
    php artisan migrate
